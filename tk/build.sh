@@ -14,12 +14,18 @@ make
 make install
 popd
 
+OPTS='--enable-threads'
+
 if [ `uname` == Darwin ]; then
-    AQUA='--enable-aqua=yes'
+    OPTS+=' --enable-aqua=yes'
+fi
+
+if [[ $ARCH > 32 ]]; then
+	OPTS+=' --enable-64-bit'
 fi
 
 pushd tk${VER}/unix
-./configure --with-tcl=$PREFIX/lib $AQUA --prefix=$PREFIX
+./configure --with-tcl=$PREFIX/lib $OPTS --prefix=$PREFIX
 make
 make install
 popd
